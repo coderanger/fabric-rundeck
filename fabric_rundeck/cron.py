@@ -18,10 +18,12 @@
 
 from .visitor import unwrap
 
-def cron(spec):
+def cron(spec=None, **kwargs):
     """Decorator to mark a task as being on a cron schedule."""
+    if not (spec or kwargs):
+        raise ValueError('You must pass either a cron spec or keyword arguments')
     def decorator(fn):
         original = unwrap(fn)
-        original.rundeck_cron = spec
+        original.rundeck_cron = spec or kwargs
         return fn
     return decorator

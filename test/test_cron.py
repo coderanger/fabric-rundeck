@@ -33,3 +33,18 @@ class TestCron(object):
         t = cron('* * * * *')(task(fn))
         data = visitor.visit_task(t, ())
         assert data['cron'] == '* * * * *'
+
+    def test_task_cron(self, fn):
+        t = task(cron('* * * * *')(fn))
+        data = visitor.visit_task(t, ())
+        assert data['cron'] == '* * * * *'
+
+    def test_cron_task_hash(self, fn):
+        t = cron(time={'minute': '*'})(task(fn))
+        data = visitor.visit_task(t, ())
+        assert data['cron'] == {'time': {'minute': '*'}}
+
+    def test_task_cron_hash(self, fn):
+        t = task(cron(time={'minute': '*'})(fn))
+        data = visitor.visit_task(t, ())
+        assert data['cron'] == {'time': {'minute': '*'}}

@@ -42,10 +42,10 @@ def visit_task(task, path):
         'doc': task.__doc__,
         'cron': getattr(task, 'rundeck_cron', None),
         'argspec': {
-          'args': args.args,
-          'varargs': args.varargs,
-          'keywords': args.keywords,
-          'defaults': args.defaults,
+            'args': args.args,
+            'varargs': args.varargs,
+            'keywords': args.keywords,
+            'defaults': args.defaults,
         },
     }
 

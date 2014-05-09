@@ -20,7 +20,7 @@ class PyTest(TestCommand):
 
 setup(
     name = 'fabric_rundeck',
-    version = '1.0',
+    version = '1.1',
     packages = find_packages(),
     author = 'Noah Kantrowitz',
     author_email = 'noah@coderanger.net',

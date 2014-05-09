@@ -31,6 +31,7 @@ def unwrap(task):
         task = closure.get('func', closure.get('fn', task))
     return task
 
+
 def visit_task(task, path):
     """Extract all needed information from a task."""
     task = unwrap(task)
@@ -48,15 +49,17 @@ def visit_task(task, path):
         },
     }
 
+
 def visit(c, path=()):
     """Recursively process all tasks in a fabfile."""
     ret = []
-    for key, value in c.iteritems():
+    for key, value in sorted(c.iteritems()):
         if isinstance(value, dict):
             ret.extend(visit(value, path + (key,)))
         else:
             ret.append(visit_task(value, path))
     return ret
+
 
 def visit_fabfile(path=None):
     """Load and process a fabfile from the current working directory."""

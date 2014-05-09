@@ -16,4 +16,4 @@
 # limitations under the License.
 #
 
-from .cron import cron
+from .cron import cron, hourly, daily, monthly

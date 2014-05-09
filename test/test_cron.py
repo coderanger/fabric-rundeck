@@ -19,16 +19,17 @@
 from fabric.api import task, roles
 import pytest
 
-from fabric_rundeck import cron, visitor
+from fabric_rundeck import cron, hourly, daily, monthly, visitor
+
+
+@pytest.fixture
+def fn():
+    def fn():
+        pass
+    return fn
 
 
 class TestCron(object):
-    @pytest.fixture
-    def fn(self):
-        def fn():
-            pass
-        return fn
-
     def test_cron_task(self, fn):
         t = cron('* * * * *')(task(fn))
         data = visitor.visit_task(t, ())
@@ -48,3 +49,24 @@ class TestCron(object):
         t = task(cron(time={'minute': '*'})(fn))
         data = visitor.visit_task(t, ())
         assert data['cron'] == {'time': {'minute': '*'}}
+
+
+class TestHourly(object):
+    def test_simple(self, fn):
+        t = hourly(task(fn))
+        data = visitor.visit_task(t, ())
+        assert data['cron'] == '0 * * * *'
+
+
+class TestDaily(object):
+    def test_simple(self, fn):
+        t = daily(task(fn))
+        data = visitor.visit_task(t, ())
+        assert data['cron'] == '0 0 * * *'
+
+
+class TestMonthly(object):
+    def test_simple(self, fn):
+        t = monthly(task(fn))
+        data = visitor.visit_task(t, ())
+        assert data['cron'] == '0 0 0 * *'

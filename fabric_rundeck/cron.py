@@ -27,3 +27,15 @@ def cron(spec=None, **kwargs):
         original.rundeck_cron = spec or kwargs
         return fn
     return decorator
+
+
+def hourly(fn):
+    return cron('0 * * * *')(fn)
+
+
+def daily(fn):
+    return cron('0 0 * * *')(fn)
+
+
+def monthly(fn):
+    return cron('0 0 0 * *')(fn)

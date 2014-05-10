@@ -41,7 +41,7 @@ local fabfile to stdout in JSON format::
     $ python -m fabric_rundeck
     [
       {
-        "cron": nul,
+        "cron": null,
         "path": [],
         "argspec": {
           "keywords": null,

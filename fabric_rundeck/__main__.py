@@ -21,8 +21,11 @@ import sys
 
 from .visitor import visit_fabfile
 
-def main():
-    json.dump(visit_fabfile(), sys.stdout, indent=2 if sys.stdout.isatty() else None)
+def main(args):
+    path = None
+    if args:
+        path = args[0]
+    json.dump(visit_fabfile(path), sys.stdout, indent=2 if sys.stdout.isatty() else None)
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
